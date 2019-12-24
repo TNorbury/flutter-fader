@@ -60,9 +60,7 @@ class _FaderState extends State<Fader> {
   Widget build(BuildContext context) {
     // If the widget has been set to visible again, but has yet to be faded back in
     // then we'll add a post frame call back so that we can set the opactiy
-    if (_currentFadeState == FadeState.FadeIn &&
-        _visible == true &&
-        _opacity == 0.0) {
+    if (_currentFadeState == FadeState.FadeIn && _visible && _opacity == 0.0) {
       WidgetsBinding.instance.addPostFrameCallback(_fadeInCallback);
     }
 
@@ -75,8 +73,10 @@ class _FaderState extends State<Fader> {
         child: widget._child,
         onEnd: () {
           // If we're finished fading out, then we'll turn off visibility
-          if (_opacity == 0.0) {
-            _visible = false;
+          if (_opacity == 0.0 && _visible) {
+            setState(() {
+              _visible = false;
+            });
           }
         },
       ),
@@ -99,10 +99,6 @@ class _FaderState extends State<Fader> {
         if (!_fadeInStepOneDone) {
           _visible = true;
         }
-        // step two, fade it in
-        else {
-          _opacity = 1.0;
-        }
       }
 
       _currentFadeState = fadeState;
@@ -112,7 +108,12 @@ class _FaderState extends State<Fader> {
   /// After the widgets get rebuilt with visibility turned back on, then we'll
   /// rebuild again with the opacity change
   void _fadeInCallback(Duration duration) {
-    _fadeInStepOneDone = true;
+    setState(() {
+      _fadeInStepOneDone = true;
+
+      // step two, fade it in
+      _opacity = 1.0;
+    });
   }
 }
 
