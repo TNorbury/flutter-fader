@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_fader/flutter_fader.dart';
 import 'package:flutter_test/flutter_test.dart';
-
-import 'package:fader/fader.dart';
 
 void main() {
   testWidgets('Verify that the fader builds and displays the child widget',
