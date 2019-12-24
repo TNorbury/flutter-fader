@@ -8,3 +8,8 @@
 
 * Updated the examples directory to example, in order to comply with pub standards
 
+## [1.0.0+2] - 12/24/19
+
+* Added badge to readme
+
+
