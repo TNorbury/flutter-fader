@@ -71,7 +71,7 @@ class _FaderState extends State<Fader> {
       child: AnimatedOpacity(
         opacity: _opacity,
         duration: widget._duration,
-        curve: widget._curve
+        curve: widget._curve,
         child: widget._child,
         onEnd: () {
           // If we're finished fading out, then we'll turn off visibility
