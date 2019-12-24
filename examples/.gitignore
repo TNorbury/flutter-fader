@@ -1,0 +1,6 @@
+# ignore build related stuff, because I don't want example build stuff checked inot source control...
+android*
+*ios*
+*test*
+*pubspec.lock*
+*.metadata*

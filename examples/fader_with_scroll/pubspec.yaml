@@ -1,0 +1,20 @@
+name: fader_with_scroll
+description: An example use case of the fader widget, using a button that, when pressed, will fade itself out, along with another button that'll fade it back in
+version: 0.0.1
+
+environment:
+  sdk: ">=2.1.0 <3.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  flutter_fader:
+    path: ../../
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+# The following section is specific to Flutter.
+flutter:
+  uses-material-design: true
