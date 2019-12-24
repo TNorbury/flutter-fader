@@ -1,3 +1,5 @@
-## [0.0.1] - TODO: Add release date.
+## [1.0.0] - 12/24/19
 
-* TODO: Describe initial release.
+* Created a stand-alone package for my fader widget
+* Created tests for the widget
+* Created examples that show how to use the widget
