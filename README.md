@@ -3,6 +3,9 @@
 A widget for [Flutter](https://flutter.dev) that allows you to fade in and out child widgets.  
 When a widget is faded out it is no longer in the view tree. Meaning that it can't be used or interacted with. Handy for hiding buttons
 
+![Example of fader with buttons](./readme_assets/fader_button.gif)
+![Example of fader with scroll](./readme_assets/fader_scroll.gif)
+
 ## Getting started
 
 In your Flutter project, add this package to your dependencies
