@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-/// Class that utilizies both [AnimatedOpacity] and [Visibility] to allow a widget
+/// Widget that utilizies both [AnimatedOpacity] and [Visibility] to allow a widget
 /// to fade out, and then be hidden (so that it can't be interacted with)
 class Fader extends StatefulWidget {
   final Widget _child;
@@ -12,7 +12,7 @@ class Fader extends StatefulWidget {
   /// [Duration] [duration] How long the fade out animation should last
   /// [FaderController] [controller] The controller that'll be used to fade
   /// the child widget in and out
-  /// [Curve] [curve]
+  /// [Curve] [curve] The curve for the animation (Optional, default is linear)
   Fader({
     Key key,
     @required Widget child,
@@ -35,10 +35,11 @@ class _FaderState extends State<Fader> {
 
   FadeState _currentFadeState;
 
-  // Fading in has to be done in two parts so that the fade in animation actually
-  // works and the widget doesn't just appear on screen.
-  // First step is to make the widget visible again, second step is to fade the opacity
-  // from 0 to 1.
+  // Fading in has to be done in two steps:
+  // 1.) Make the widget visible, this puts it back into the view tree, and allows
+  //     us to interact with it/do things to it.
+  // 2.) Change the opacity (with an animation), so that the child widget is "visible"
+  //     (at this point, it exists, but is still transparent).
   bool _fadeInStepOneDone = false;
 
   @override
@@ -58,8 +59,9 @@ class _FaderState extends State<Fader> {
 
   @override
   Widget build(BuildContext context) {
-    // If the widget has been set to visible again, but has yet to be faded back in
-    // then we'll add a post frame call back so that we can set the opactiy
+    // If the widget has become visible again, but has yet to be faded back in,
+    // then we'll add a post-frame call back so that we can set the opactiy, and
+    // update after this current frame is done
     if (_currentFadeState == FadeState.FadeIn && _visible && _opacity == 0.0) {
       WidgetsBinding.instance.addPostFrameCallback(_fadeInCallback);
     }
@@ -86,7 +88,7 @@ class _FaderState extends State<Fader> {
   void _fade(FadeState fadeState) {
     setState(() {
       // If we're fading out, then set the opacity to 0 (clear). The visibility
-      // will be handled when the
+      // will be changed when the fade out animation ends.
       if (fadeState == FadeState.FadeOut) {
         _opacity = 0.0;
         _fadeInStepOneDone = false;
@@ -105,8 +107,9 @@ class _FaderState extends State<Fader> {
     });
   }
 
-  /// After the widgets get rebuilt with visibility turned back on, then we'll
-  /// rebuild again with the opacity change
+  /// After the widget gets rebuilt with visibility turned back on, then we'll
+  /// rebuild again with the opacity change. 
+  /// (This gets called as a post-frame callback).
   void _fadeInCallback(Duration duration) {
     setState(() {
       _fadeInStepOneDone = true;
