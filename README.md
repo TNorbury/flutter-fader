@@ -15,7 +15,7 @@ In your Flutter project, add the package to your dependencies
 ```yml
 dependencies:
   ...
-  flutter_fader: ^1.0.1
+  flutter_fader: ^1.0.2
 ```
 
 ## Usage example
@@ -25,7 +25,7 @@ Examples of how to use the widget, and that can also be ran on your device, can 
 Import the fader package
 
 ```dart
-import 'package:flutter_test/flutter_test.dart';
+import 'package:flutter_fader/flutter_fader.dart';
 ```
 
 Create a fader controller, this allows you to control when the Fader fades in or out
