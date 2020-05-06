@@ -1,6 +1,6 @@
 name: fader_with_scroll
 description: Showing the use of the fader with a floating action button and scrolling
-version: 1.0.0+1
+version: 1.0.1
 
 environment:
   sdk: ">=2.1.0 <3.0.0"
@@ -8,7 +8,8 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  cupertino_icons: ^0.1.2
+  flutter_fader:
+    path: ../../
 dev_dependencies:
   flutter_test:
     sdk: flutter
