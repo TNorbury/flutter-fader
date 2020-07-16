@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-/// Widget that utilizies both [AnimatedOpacity] and [Visibility] to allow a widget
-/// to fade out, and then be hidden (so that it can't be interacted with)
+/// Widget that utilizes both [AnimatedOpacity] and [Visibility] to allow a
+/// widget to fade out, and then be hidden (so that it can't be interacted with)
 class Fader extends StatefulWidget {
   final Widget _child;
   final Duration _duration;
@@ -16,7 +16,7 @@ class Fader extends StatefulWidget {
   Fader({
     Key key,
     @required Widget child,
-    @required duration,
+    @required Duration duration,
     @required FaderController controller,
     Curve curve = Curves.linear,
   })  : _child = child,
@@ -36,10 +36,10 @@ class _FaderState extends State<Fader> {
   FadeState _currentFadeState;
 
   // Fading in has to be done in two steps:
-  // 1.) Make the widget visible, this puts it back into the view tree, and allows
-  //     us to interact with it/do things to it.
-  // 2.) Change the opacity (with an animation), so that the child widget is "visible"
-  //     (at this point, it exists, but is still transparent).
+  // 1.) Make the widget visible, this puts it back into the view tree, and
+  //      allows us to interact with it/do things to it.
+  // 2.) Change the opacity (with an animation), so that the child widget is
+  //      "visible" (at this point, it exists, but is still transparent).
   bool _fadeInStepOneDone = false;
 
   @override
@@ -60,7 +60,7 @@ class _FaderState extends State<Fader> {
   @override
   Widget build(BuildContext context) {
     // If the widget has become visible again, but has yet to be faded back in,
-    // then we'll add a post-frame call back so that we can set the opactiy, and
+    // then we'll add a post-frame call back so that we can set the opacity, and
     // update after this current frame is done
     if (_currentFadeState == FadeState.FadeIn && _visible && _opacity == 0.0) {
       WidgetsBinding.instance.addPostFrameCallback(_fadeInCallback);
@@ -94,8 +94,8 @@ class _FaderState extends State<Fader> {
         _fadeInStepOneDone = false;
       }
 
-      // Otherwise, if we're fading in, then make our child visible, and then make
-      // it opaque.
+      // Otherwise, if we're fading in, then make our child visible, and then
+      // make it opaque.
       else if (fadeState == FadeState.FadeIn) {
         // step one, make the widget visible
         if (!_fadeInStepOneDone) {
@@ -108,7 +108,7 @@ class _FaderState extends State<Fader> {
   }
 
   /// After the widget gets rebuilt with visibility turned back on, then we'll
-  /// rebuild again with the opacity change. 
+  /// rebuild again with the opacity change.
   /// (This gets called as a post-frame callback).
   void _fadeInCallback(Duration duration) {
     setState(() {
@@ -120,41 +120,70 @@ class _FaderState extends State<Fader> {
   }
 }
 
-// A fader will either fade in or fade out
-enum FadeState { FadeIn, FadeOut }
+/// Used by the [FaderController] to tell its [Fader]s that they should either
+/// fading in or fading out.
+enum FadeState {
+  /// The [Fader] is fading in
+  FadeIn,
+
+  /// The [Fader] is fading out
+  FadeOut,
+}
 
 /// Controller for the fader. Allows the user to fade the widget in and out.
-/// While there are methods for adding and removing listeners, since I was those
-/// methods to take a boolean, I'm just using the name, without actually overridding
-/// them.
+///
+/// Using the controller after it's been disposed will result in an exception
+/// being thrown
 class FaderController {
-  List<void Function(FadeState fadeSate)> _listeners = [];
+  final List<void Function(FadeState fadeSate)> _listeners = [];
 
-  dispose() {
+  // Once the controller is disposed, it shan't be used anymore.
+  bool _disposed = false;
+
+  /// To be called when you're done with the controller. Clears out all the
+  /// listener methods.
+  void dispose() {
     _listeners.clear();
+    _disposed = true;
   }
 
+  /// Fades the listening Faders in
   void fadeIn() {
+    _checkDisposed();
+
     // Go over all the listeners and tell them to fade in
     for (var listener in _listeners) {
       listener(FadeState.FadeIn);
     }
   }
 
+  /// Fades the listening Faders out
   void fadeOut() {
+    _checkDisposed();
+
     // Go over all the listeners and tell them to fade out
     for (var listener in _listeners) {
       listener(FadeState.FadeOut);
     }
   }
 
-  // Adds a new listener to the controller
+  /// Adds a new listener to the controller
   void addListener(void Function(FadeState fadeSate) listener) {
+    _checkDisposed();
     _listeners.add(listener);
   }
 
-  // Removes the given listener (if it exists) from the controller
+  /// Removes the given listener (if it exists) from the controller
   void removeListener(void Function(FadeState fadeSate) listener) {
+    _checkDisposed();
     _listeners.remove(listener);
+  }
+
+  /// Checks to make sure that the controller hasn't been disposed yet. If it
+  /// has, throw an exception.
+  void _checkDisposed() {
+    if (_disposed) {
+      throw Exception("Controller has been disposed");
+    }
   }
 }

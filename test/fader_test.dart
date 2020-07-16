@@ -4,8 +4,8 @@ import 'package:flutter_test/flutter_test.dart';
 
 void main() {
   testWidgets('Verify that the fader builds and displays the child widget',
-      (WidgetTester tester) async {
-    FaderController _faderController = new FaderController();
+      (tester) async {
+    var _faderController = FaderController();
     final fader = Fader(
       controller: _faderController,
       duration: const Duration(milliseconds: 250),
@@ -26,9 +26,9 @@ void main() {
   });
 
   testWidgets("Verify that the fader fades out", (WidgetTester tester) async {
-    FaderController _faderController = new FaderController();
+    var faderController = FaderController();
     final fader = Fader(
-      controller: _faderController,
+      controller: faderController,
       duration: const Duration(milliseconds: 50),
       child: Text("Test!"),
     );
@@ -40,7 +40,7 @@ void main() {
     await tester.pumpWidget(app);
 
     // Now tell the controller to fade out, and wait for the animation to finish
-    _faderController.fadeOut();
+    faderController.fadeOut();
     await tester.pumpAndSettle(const Duration(milliseconds: 300));
 
     // Verify that the test isn't displayed
@@ -49,9 +49,9 @@ void main() {
   });
 
   testWidgets("Verify that the fader fades in", (WidgetTester tester) async {
-    FaderController _faderController = new FaderController();
+    var faderController = FaderController();
     final fader = Fader(
-      controller: _faderController,
+      controller: faderController,
       duration: const Duration(milliseconds: 50),
       child: Text("Test!"),
     );
@@ -63,17 +63,33 @@ void main() {
     await tester.pumpWidget(app);
 
     // Now tell the controller to fade out
-    _faderController.fadeOut();
+    faderController.fadeOut();
     await tester.pumpAndSettle(const Duration(milliseconds: 300));
 
     // And tell it to fade back in
-    _faderController.fadeIn();
+    faderController.fadeIn();
     await tester.pumpAndSettle(const Duration(milliseconds: 300));
 
     // Verify that the test text is displayed
     final textFinder = find.text("Test!");
     expect(textFinder, findsOneWidget);
   });
+
+  test(
+    "The controller shouldn't be usable after being disposed",
+    () {
+      // Create a controller, then dispose it.
+      var faderController = FaderController();
+      faderController.dispose();
+
+      // Call all the methods of the controller, they should all throw 
+      // exceptions 
+      expect(() => faderController.fadeIn(), throwsException);
+      expect(() => faderController.fadeOut(), throwsException);
+      expect(() => faderController.addListener(null), throwsException);
+      expect(() => faderController.removeListener(null), throwsException);
+    },
+  );
 }
 
 /// This is being used so that we can give the fader somewhere to live

@@ -1,6 +1,6 @@
 name: flutter_fader
 description: A flutter widget that allows you to fade a child widget in and out. When faded out the child widget is removed from the tree (it can't be interacted with
-version: 1.0.2+1
+version: 1.0.3
 repository: https://github.com/TNorbury/flutter-fader
 homepage: https://github.com/TNorbury/flutter-fader
 issue_tracker: https://github.com/TNorbury/flutter-fader/issues
@@ -13,6 +13,7 @@ dependencies:
     sdk: flutter
 
 dev_dependencies:
+  effective_dart: ^1.2.0
   flutter_test:
     sdk: flutter
 
