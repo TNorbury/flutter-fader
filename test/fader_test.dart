@@ -75,6 +75,31 @@ void main() {
     expect(textFinder, findsOneWidget);
   });
 
+  testWidgets(
+    "Child widget shouldn't be visible if startVisible is false",
+    (WidgetTester tester) async {
+      var faderController = FaderController();
+      final fader = Fader(
+        controller: faderController,
+        duration: const Duration(milliseconds: 50),
+        startVisible: false,
+        child: Text("Test!"),
+      );
+
+      final app = TestApp(
+        fader: fader,
+      );
+
+      // Nothing'll be displayed initially
+      await tester.pumpWidget(app);
+      expect(find.text("Test!"), findsNothing);
+
+      faderController.fadeIn();
+      await tester.pumpAndSettle();
+      expect(find.text("Test!"), findsOneWidget);
+    },
+  );
+
   test(
     "The controller shouldn't be usable after being disposed",
     () {
@@ -82,8 +107,8 @@ void main() {
       var faderController = FaderController();
       faderController.dispose();
 
-      // Call all the methods of the controller, they should all throw 
-      // exceptions 
+      // Call all the methods of the controller, they should all throw
+      // exceptions
       expect(() => faderController.fadeIn(), throwsException);
       expect(() => faderController.fadeOut(), throwsException);
       expect(() => faderController.addListener(null), throwsException);

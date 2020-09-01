@@ -8,10 +8,16 @@ class Fader extends StatefulWidget {
   final FaderController _controller;
   final Curve _curve;
 
+  /// Determines whether or not the child item will be visible initially or not
+  final bool startVisible;
+
   /// [Widget] [child] The widget that will be faded in and out
+  ///
   /// [Duration] [duration] How long the fade out animation should last
+  ///
   /// [FaderController] [controller] The controller that'll be used to fade
   /// the child widget in and out
+  ///
   /// [Curve] [curve] The curve for the animation (Optional, default is linear)
   Fader({
     Key key,
@@ -19,6 +25,7 @@ class Fader extends StatefulWidget {
     @required Duration duration,
     @required FaderController controller,
     Curve curve = Curves.linear,
+    this.startVisible = true,
   })  : _child = child,
         _duration = duration,
         _controller = controller,
@@ -30,8 +37,8 @@ class Fader extends StatefulWidget {
 }
 
 class _FaderState extends State<Fader> {
-  bool _visible = true;
-  double _opacity = 1.0;
+  bool _visible;
+  double _opacity;
 
   FadeState _currentFadeState;
 
@@ -46,6 +53,16 @@ class _FaderState extends State<Fader> {
   void initState() {
     // listen to the controller
     widget._controller.addListener(_fade);
+
+    // Configure the visibility variables depending on the starting visibility
+    // state
+    if (!widget.startVisible) {
+      _opacity = 0.0;
+      _visible = false;
+    } else {
+      _opacity = 1.0;
+      _visible = true;
+    }
 
     super.initState();
   }
