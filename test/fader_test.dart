@@ -18,7 +18,6 @@ void main() {
 
     // pump the widget so that it exists
     await tester.pumpWidget(app);
-    expect(fader != null, true);
 
     // Verify that the test is displayed
     final textFinder = find.text("Test!");
@@ -99,29 +98,13 @@ void main() {
       expect(find.text("Test!"), findsOneWidget);
     },
   );
-
-  test(
-    "The controller shouldn't be usable after being disposed",
-    () {
-      // Create a controller, then dispose it.
-      var faderController = FaderController();
-      faderController.dispose();
-
-      // Call all the methods of the controller, they should all throw
-      // exceptions
-      expect(() => faderController.fadeIn(), throwsException);
-      expect(() => faderController.fadeOut(), throwsException);
-      expect(() => faderController.addListener(null), throwsException);
-      expect(() => faderController.removeListener(null), throwsException);
-    },
-  );
 }
 
 /// This is being used so that we can give the fader somewhere to live
 class TestApp extends StatelessWidget {
   final Fader _fader;
 
-  const TestApp({Key key, @required fader})
+  const TestApp({Key? key, @required fader})
       : _fader = fader,
         super(key: key);
 

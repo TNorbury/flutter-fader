@@ -7,7 +7,7 @@ void main() {
 }
 
 class FaderWithScroll extends StatelessWidget {
-  FaderWithScroll({Key key}) : super(key: key) {
+  FaderWithScroll({Key? key}) : super(key: key) {
     _scrollController.addListener(() {
       bool scrollingDown = _scrollController.position.userScrollDirection ==
           ScrollDirection.reverse;

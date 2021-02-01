@@ -6,7 +6,7 @@ void main() {
 }
 
 class FaderWithButtons extends StatelessWidget {
-  FaderWithButtons({Key key}) : super(key: key);
+  FaderWithButtons({Key? key}) : super(key: key);
 
   final FaderController _faderController = FaderController();
 
