@@ -18,7 +18,7 @@ In your Flutter project, add the package to your dependencies
 ```yml
 dependencies:
   ...
-  flutter_fader: ^2.0.0-nullsafety.1
+  flutter_fader: ^2.0.0
 ```
 
 ## Usage example
