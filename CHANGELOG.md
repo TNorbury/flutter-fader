@@ -4,8 +4,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [Unreleased]
-## [2.0.0] - 2021-03-03
+## 2.0.1 - 2022-08-23
+### Changed
+- Flutter 3 support
+- Use Flutter Lints for analysis
+
+## 2.0.0 - 2021-03-03
 ### Changed
 - release nullsafety
 
@@ -28,7 +32,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## 1.0.3+2 - 2020-07-16
 ### Changed
-- Fixed spelling mistake in pubspec description 
+- Fixed spelling mistake in pubspec description
 
 ## 1.0.3+1 - 2020-07-16
 ### Changed
@@ -78,6 +82,3 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Created a stand-alone package for my fader widget
 - Created tests for the widget
 - Created examples that show how to use the widget
-
-[Unreleased]: 
-[2.0.0]:

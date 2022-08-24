@@ -24,14 +24,14 @@ class FaderWithButtons extends StatelessWidget {
               Fader(
                 controller: _faderController,
                 duration: const Duration(milliseconds: 500),
-                child: RaisedButton(
+                child: ElevatedButton(
                   onPressed: () {
                     _faderController.fadeOut();
                   },
                   child: Text("Fade me out!"),
                 ),
               ),
-              RaisedButton(
+              ElevatedButton(
                 onPressed: () {
                   _faderController.fadeIn();
                 },

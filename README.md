@@ -2,7 +2,7 @@
 
 [![pub package](https://img.shields.io/pub/v/flutter_fader.svg)](https://pub.dev/packages/flutter_fader)
 [![codecov](https://codecov.io/gh/TNorbury/flutter-fader/branch/master/graph/badge.svg)](https://codecov.io/gh/TNorbury/flutter-fader)
-[![style: effective dart](https://img.shields.io/badge/style-effective_dart-40c4ff.svg)](https://pub.dev/packages/effective_dart)
+[![style: flutter lints](https://img.shields.io/badge/style-flutter__lints-blue)](https://pub.dev/packages/flutter_lints)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 A widget for [Flutter](https://flutter.dev) that allows you to fade in and out a child widget.  

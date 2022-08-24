@@ -19,7 +19,7 @@ class Fader extends StatefulWidget {
   /// the child widget in and out
   ///
   /// [Curve] [curve] The curve for the animation (Optional, default is linear)
-  Fader({
+  const Fader({
     Key? key,
     required Widget child,
     required Duration duration,
@@ -75,7 +75,7 @@ class _FaderState extends State<Fader> {
     if (widget._controller.currentFadeState == FadeState.FadeIn &&
         _visible &&
         _opacity == 0.0) {
-      WidgetsBinding.instance?.addPostFrameCallback(_fadeInCallback);
+      WidgetsBinding.instance.addPostFrameCallback(_fadeInCallback);
     }
 
     return Visibility(
